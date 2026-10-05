@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: bpmn-architect
+    runtime: node
+    plan: free
+    buildCommand: tar -xzf app.tar.gz && npm ci --omit=dev
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 24.14.0
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: ALLOW_CLIENT_LLM_CONFIG
+        value: "false"
+      - key: LLM_BASE_URL
+        value: https://api.groq.com/openai/v1
+      - key: LLM_MODEL
+        value: openai/gpt-oss-120b
+      - key: LLM_TIMEOUT_MS
+        value: "45000"
+      - key: LLM_API_KEY
+        sync: false
+
